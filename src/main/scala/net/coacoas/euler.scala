@@ -126,7 +126,7 @@ object euler extends App {
       BigInt("53503534226472524250874054075591789781264330331690"))
       
       println(nums.sum)
-      println(nums.sum.toString.take(10))
+      println(time(() => nums.sum.toString.take(10)))
   }
 
   def p12 = {
