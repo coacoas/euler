@@ -6,6 +6,11 @@ import java.util.Calendar
 
 object euler extends App {
   def from(l: Long): Stream[Long] = l #:: from(l + 1)
+  
+  lazy val tri: Stream[Long] = {
+    def loop(n: Long, last: Long): Stream[Long] = (n + last) #:: loop(n + 1, n + last)
+    loop(1, 0)
+  }
 
   def time[T](f: () => T) = {
     val start = Calendar.getInstance
@@ -21,7 +26,13 @@ object euler extends App {
         values.takeWhile(k => k * k <= j).forall(j % _ > 0)).get)
   }
 
-  p13
+  p14
+  def p14 = {
+    def seq(l: Long): Stream[Long] = l #:: (if (l == 1) Stream.empty else seq(if (l % 2 == 0) l / 2 else 3 * l + 1))
+    time (() => (1L until 1000000L).map(n => (n, seq(n).size)).sortBy(_._2).head)
+  }
+  
+  
   def p13 = {
     val nums = Seq(
       BigInt("37107287533902102798797998220837590246510135740250"),
@@ -130,10 +141,6 @@ object euler extends App {
   }
 
   def p12 = {
-    lazy val tri: Stream[Long] = {
-      def loop(n: Long, last: Long): Stream[Long] = (n + last) #:: loop(n + 1, n + last)
-      loop(1, 0)
-    }
 
     // Much more functional.  Ran about 8 times faster, too. 
     def div2(n: Long) = (1L to math.sqrt(n).toLong).filter(n % _ == 0).flatMap(i => if (n / i == i) List(i) else List(i, n / i))
