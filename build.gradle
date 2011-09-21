@@ -1,0 +1,21 @@
+apply plugin: 'scala'
+apply plugin: 'eclipse'
+
+group = "net.coacoas"
+version = "1.0"
+
+repositories {
+	mavenRepo urls: "${mvn_repository}"
+}
+
+scalaVersion = '2.9.1'
+
+dependencies {
+	// Libraries needed to run the scala tools
+	scalaTools "org.scala-lang:scala-compiler:${scalaVersion}",
+	           "org.scala-lang:scala-library:${scalaVersion}"
+
+	// Libraries needed for scala api
+	compile "org.scala-lang:scala-library:${scalaVersion}"
+}
+
