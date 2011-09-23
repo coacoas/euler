@@ -3,7 +3,7 @@ import scala.annotation.tailrec
 
 import Streams._
 
-class P12Base extends Problem {
+class P12Base extends Problem[String] {
   override def run = {
 
     // Much more functional.  Ran about 8 times faster, too. 
@@ -31,9 +31,9 @@ class P12Base extends Problem {
     triangleNumbers.dropWhile(n => { div2(n).size < 500 }).head.toString
   }
 }
-object P12 extends P12Base with Timing with Logging
+object P12 extends P12Base with Timing[String] with Logging[String]
 
-class P13Base extends Problem {
+class P13Base extends Problem[String] {
   override def run = {
     val nums = Seq(
       BigInt("37107287533902102798797998220837590246510135740250"),
@@ -140,13 +140,18 @@ class P13Base extends Problem {
     nums.sum.toString
   }
 }
-object P13 extends P13Base with Timing with Logging
+object P13 extends P13Base with Timing[String] with Logging[String]
 
-class P14Base extends Problem {
+class P14Base extends Problem[String] {
   override def run = {
     def seq(l: Long): Stream[Long] = l #:: (if (l == 1) Stream.empty else seq(if (l % 2 == 0) l / 2 else 3 * l + 1))
     (1L until 1000000L).map(n => (n, seq(n).size)).sortWith(_._2 > _._2).head.toString
   }
 }
-object P14 extends P14Base with Timing with Logging
+object P14 extends P14Base with Timing[String] with Logging[String]
+
+class P15Base extends Problem[BigInt] {
+  override def run = (1 to 1000).foldLeft(BigInt(1))((a,b) => a * 2).toString.toList.map(_ - '0').sum
+}
+object P15 extends P15Base with Timing[BigInt] with Logging[BigInt]
 

@@ -3,16 +3,16 @@ package net.coacoas.euler
 import scala.annotation.tailrec
 import java.util.Calendar
 
-abstract class Problem {
-  def run: String
+abstract class Problem[T] {
+  def run: T
 }
 
-abstract class ActiveProblem extends Problem { 
+abstract class ActiveProblem[T] extends Problem[T] { 
   run
 }
 
-trait Timing extends Problem {
-  def time[T](f: () => T): T = {
+trait Timing[T] extends Problem[T] {
+  def time(f: () => T): T = {
     val start = Calendar.getInstance.getTimeInMillis()
     val s = f()
     val end = Calendar.getInstance.getTimeInMillis()
@@ -20,11 +20,11 @@ trait Timing extends Problem {
     s
   }
 
-  abstract override def run = time (super.run _) 
+  abstract override def run: T = time (super.run _) 
 }
 
-trait Logging extends Problem {
-  abstract override def run = {
+trait Logging[T] extends Problem[T] {
+  abstract override def run: T = {
     lazy val result = super.run
     println(result)
     result

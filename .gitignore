@@ -1,9 +1,11 @@
 /.classpath
 /.gradle
 /.project
+/.ensime
 /.scala_dependencies
 /.settings
 /LICENSE.txt
 /bin
 /project
 /target
+**~

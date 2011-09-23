@@ -1,25 +1,25 @@
 package net.coacoas.euler
 import Streams._
 
-class P1Base extends Problem {
+class P1Base extends Problem[String] {
   override def run() = naturals.take(999).filter(x => (x % 3 == 0) || (x % 5 == 0)).sum.toString
 }
-object P1 extends P1Base with Logging with Timing
+object P1 extends P1Base with Logging[String] with Timing[String]
 
-class P2Base extends Problem {
+class P2Base extends Problem[String] {
   override def run = fibs.takeWhile(_ < 4000000).filter(_ % 2 == 0).sum.toString
 }
-object P2 extends P2Base with Timing with Logging
+object P2 extends P2Base with Timing[String] with Logging[String]
 
-class P3Base extends Problem {
+class P3Base extends Problem[String] {
   override def run = {
     var theNum = 600851475143L
     naturals.drop(1).dropWhile(n => { while (theNum % n == 0) { theNum /= n }; theNum > 1 }).head.toString
   }
 }
-object P3 extends P3Base with Timing with Logging
+object P3 extends P3Base with Timing[String] with Logging[String]
 
-class P4Base extends Problem {
+class P4Base extends Problem[String] {
   override def run = {
     for {
       i <- 100 to 999
@@ -28,28 +28,28 @@ class P4Base extends Problem {
     } yield (i * j)
   }.max.toString
 }
-object P4 extends P4Base with Timing with Logging
+object P4 extends P4Base with Timing[String] with Logging[String]
 
-class P5Base extends Problem {
+class P5Base extends Problem[String] {
   val all = naturals.take(20).toSeq
   override def run = Iterator.from(1).find(i => all.forall(d => i % d == 0)).toString()
 } 
-object P5 extends P5Base with Timing with Logging
+object P5 extends P5Base with Timing[String] with Logging[String]
 
-class P6Base extends Problem {
+class P6Base extends Problem[String] {
   def sumOfSquares(longs: Seq[Int]) = longs.foldLeft(0)((acc, l) => acc + (l * l))
   def squareOfSums(longs: Seq[Int]) = { val sums = longs.sum; sums * sums } 
 
   override def run = (squareOfSums((1 to 100).toSeq) - sumOfSquares((1 to 100).toSeq)).toString
 }
-object P6 extends P6Base with Timing with Logging
+object P6 extends P6Base with Timing[String] with Logging[String]
 
-class P7Base extends Problem { 
+class P7Base extends Problem[String] { 
   override def run = primes.drop(10000).head.toString
 }
-object P7 extends P7Base with Timing with Logging
+object P7 extends P7Base with Timing[String] with Logging[String]
 
-class P8Base extends Problem {
+class P8Base extends Problem[String] {
   override def run = {
     """73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
@@ -74,14 +74,14 @@ class P8Base extends Problem {
 """.replaceAll("""\n""", "").map(_ - '0').sliding(5).map(x => x.foldLeft(1)(_ * _)).max.toString
   }
 }
-object P8 extends P8Base with Timing with Logging
+object P8 extends P8Base with Timing[String] with Logging[String]
 
-class P9Base extends Problem {
+class P9Base extends Problem[String] {
   override def run = "Test"
 }
-object P9 extends P9Base with Timing with Logging
+object P9 extends P9Base with Timing[String] with Logging[String]
 
-class P10Base extends Problem {
+class P10Base extends Problem[String] {
   override def run = primes.takeWhile(_ < 2000000).sum.toString
 }
-object P10 extends P10Base with Timing with Logging
+object P10 extends P10Base with Timing[String] with Logging[String]
