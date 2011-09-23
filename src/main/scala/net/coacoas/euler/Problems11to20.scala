@@ -148,7 +148,5 @@ class P14Base extends Problem {
     (1L until 1000000L).map(n => (n, seq(n).size)).sortWith(_._2 > _._2).head.toString
   }
 }
-object P14 extends P14Base with Timing with Logging  with App { 
-  run
-}
+object P14 extends P14Base with Timing with Logging
 
