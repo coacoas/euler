@@ -1,7 +1,19 @@
 package net.coacoas.euler
 import scala.annotation.tailrec
+import scala.io.Source
 
 import Streams._
+
+class P11Base extends Problem[Long] {
+  def run = {
+    val values = Source.fromInputStream(classOf[P11Base].getResourceAsStream("/Problem11.dat")).getLines.toArray.map(_.split(' ').map(_.toLong))
+    (for {
+      i <- values
+      j <- i
+    } yield j).max
+  }
+
+}
 
 class P12Base extends Problem[String] {
   override def run = {
@@ -151,7 +163,30 @@ class P14Base extends Problem[String] {
 object P14 extends P14Base with Timing[String] with Logging[String]
 
 class P15Base extends Problem[BigInt] {
-  override def run = (1 to 1000).foldLeft(BigInt(1))((a,b) => a * 2).toString.toList.map(_ - '0').sum
+  def grid = for {
+    i <- 1 to 21
+    j <- 1 to 21
+  } yield (i, j)
+
+  def value(m: Map[(Int,Int), BigInt], i: Int, j: Int): BigInt = if (i == 1 || j == 1) 1L else
+    (for {
+      x <- m.get((i - 1) -> j)
+      y <- m.get(i -> (j - 1))
+      z <- Option(x + y)
+    } yield z).getOrElse(1)
+    
+  def run = {
+    val map = grid.foldLeft(Map[(Int, Int), BigInt]())((map, elem) => elem match {
+      case (i, j) => map ++ Map((i -> j) -> value(map, i, j))
+      case _ => map
+    })
+    map((21,21))
+  }
 }
 object P15 extends P15Base with Timing[BigInt] with Logging[BigInt]
+
+class P16Base extends Problem[BigInt] {
+  override def run = (1 to 1000).foldLeft(BigInt(1))((a, b) => a * 2).toString.toList.map(_ - '0').sum
+}
+object P16 extends P16Base with Timing[BigInt] with Logging[BigInt]
 
