@@ -5,15 +5,29 @@ import scala.io.Source
 import Streams._
 
 class P11Base extends Problem[Long] {
-  def run = {
-    val values = Source.fromInputStream(classOf[P11Base].getResourceAsStream("/Problem11.dat")).getLines.toArray.map(_.split(' ').map(_.toLong))
-    (for {
-      i <- values
-      j <- i
-    } yield j).max
+  def max(i: Int, j: Int, values: Array[Array[Int]]): Int = {
+    def mult(flag: Boolean, f: Int => Int, g: Int => Int) = if (flag)
+      (0 until 4).fold(1)((acc, offset) => acc * (values(f(offset))(g(offset))))
+    else 0
+
+    def e = mult(j < 16, x => i, x => j + x)
+    def s = mult(i < 16, x => i + x, x => j)
+    def se = mult(i < 16 && j < 16, x => i + x, x => j + x)
+    def sw = mult(i > 4 && j < 16, x => i - x, x => j + x)
+
+    val results = (e :: s :: se :: sw :: Nil)
+    results.max
   }
 
+  def run = {
+    val values = Source.fromInputStream(classOf[P11Base].getResourceAsStream("/Problem11.dat")).getLines.toArray.map(_.split(' ').map(_.toInt))
+    (for {
+      i <- 0 until values.length
+      j <- 0 until values(i).length
+    } yield max(i, j, values)).max
+  }
 }
+object P11 extends P11Base with Timing[Long] with Logging[Long]
 
 class P12Base extends Problem[String] {
   override def run = {
@@ -168,19 +182,19 @@ class P15Base extends Problem[BigInt] {
     j <- 1 to 21
   } yield (i, j)
 
-  def value(m: Map[(Int,Int), BigInt], i: Int, j: Int): BigInt = if (i == 1 || j == 1) 1L else
+  def value(m: Map[(Int, Int), BigInt], i: Int, j: Int): BigInt = if (i == 1 || j == 1) 1L else
     (for {
       x <- m.get((i - 1) -> j)
       y <- m.get(i -> (j - 1))
       z <- Option(x + y)
     } yield z).getOrElse(1)
-    
+
   def run = {
     val map = grid.foldLeft(Map[(Int, Int), BigInt]())((map, elem) => elem match {
       case (i, j) => map ++ Map((i -> j) -> value(map, i, j))
       case _ => map
     })
-    map((21,21))
+    map((21, 21))
   }
 }
 object P15 extends P15Base with Timing[BigInt] with Logging[BigInt]
@@ -190,3 +204,49 @@ class P16Base extends Problem[BigInt] {
 }
 object P16 extends P16Base with Timing[BigInt] with Logging[BigInt]
 
+class P17Base extends Problem[Long] {
+  def hundreds(i: Int): String = {
+    val tens = i % 100
+    asString(i / 100) + "hundred" + (if (tens!= 0) "and" else "") + asString(tens)
+  }
+
+  def asString(i: Int): String = i match {
+    case 1000 => "onethousand"
+    case 0 => ""
+    case 1 => "one"
+    case 2 => "two"
+    case 3 => "three"
+    case 4 => "four"
+    case 5 => "five"
+    case 6 => "six"
+    case 7 => "seven"
+    case 8 => "eight"
+    case 9 => "nine"
+    case 10 => "ten"
+    case 11 => "eleven"
+    case 12 => "twelve"
+    case 13 => "thirteen"
+    case 14 => "fourteen"
+    case 15 => "fifteen"
+    case 16 => "sixteen"
+    case 17 => "seventeen"
+    case 18 => "eighteen"
+    case 19 => "nineteen"
+    case j: Int if j >= 20 && j < 30 => "twenty" + asString(j - 20)
+    case j: Int if j >= 30 && j < 40 => "thirty" + asString(j - 30)
+    case j: Int if j >= 40 && j < 50 => "forty" + asString(j - 40)
+    case j: Int if j >= 50 && j < 60 => "fifty" + asString(j - 50)
+    case j: Int if j >= 60 && j < 70 => "sixty" + asString(j - 60)
+    case j: Int if j >= 70 && j < 80 => "seventy" + asString(j - 70)
+    case j: Int if j >= 80 && j < 90 => "eighty" + asString(j - 80)
+    case j: Int if j >= 90 && j < 100 => "ninety" + asString(j - 90)
+    case j: Int if j >= 100 => hundreds(j)
+  }
+
+  override def run = {
+    val names = (1 to 1000).map(asString(_).length)
+    names.foreach(println)
+    names.sum
+  }
+}
+object P17 extends P17Base with Timing[Long] with Logging[Long]
