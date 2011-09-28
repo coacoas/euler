@@ -243,10 +243,6 @@ class P17Base extends Problem[Long] {
     case j: Int if j >= 100 => hundreds(j)
   }
 
-  override def run = {
-    val names = (1 to 1000).map(asString(_).length)
-    names.foreach(println)
-    names.sum
-  }
+  override def run = (1 to 1000).map(asString(_).length).sum
 }
 object P17 extends P17Base with Timing[Long] with Logging[Long]
