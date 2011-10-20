@@ -186,3 +186,18 @@ class P19Base extends Problem[Long] {
   def run = rainyDaysAndSundays(0, 0, 1, 1901)
 }
 object P19 extends P19Base with Timing[Long] with Logging[Long]
+
+class P20Base extends Problem[Long] {
+  def fac(n: Int) = { 
+    @tailrec
+    def internalfac(acc: BigInt, n: Int): BigInt = n match { 
+      case 1 => acc
+      case _ => internalfac(acc * n, n - 1)
+    }
+    internalfac(1, n)
+  }
+  def run = { 
+	  fac(100).toString.toList.foldLeft(0)((acc, i) => (acc + (i - '0')))
+  }
+} 
+object P20 extends P20Base with Timing[Long] with Logging[Long]
