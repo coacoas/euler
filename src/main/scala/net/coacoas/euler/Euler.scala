@@ -1,7 +1,10 @@
 package net.coacoas.euler
 
-import scala.annotation.tailrec
 import java.util.Calendar
+
+object Support { 
+  def ??? = throw new NotDefinedError("The method has not been defined")
+}
 
 abstract class Problem[T] {
   def run: T

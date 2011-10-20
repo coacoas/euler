@@ -3,6 +3,7 @@ import scala.annotation.tailrec
 import scala.io.Source
 
 import Streams._
+import Support._
 
 class P11Base extends Problem[Long] {
   def max(i: Int, j: Int, values: Array[Array[Int]]): Int = {
@@ -103,7 +104,7 @@ object P16 extends P16Base with Timing[BigInt] with Logging[BigInt]
 class P17Base extends Problem[Long] {
   def hundreds(i: Int): String = {
     val tens = i % 100
-    asString(i / 100) + "hundred" + (if (tens!= 0) "and" else "") + asString(tens)
+    asString(i / 100) + "hundred" + (if (tens != 0) "and" else "") + asString(tens)
   }
 
   def asString(i: Int): String = i match {
@@ -146,4 +147,42 @@ object P17 extends P17Base with Timing[Long] with Logging[Long]
 class P18Base extends Problem[Long] {
   def run = 0
 }
-object P18 extends P18Base with Timing[Long] with Logging[Long] 
+object P18 extends P18Base with Timing[Long] with Logging[Long]
+
+/**
+ * You are given the following information, but you may prefer to do some research for yourself.
+ *
+ * <ul>
+ * <li>1 Jan 1900 was a Monday.</li>
+ * <li>Thirty days has September,</li>
+ * <li>April, June and November.</li>
+ * <li>All the rest have thirty-one,</li>
+ * <li>Saving February alone,</li>
+ * <li>Which has twenty-eight, rain or shine.</li>
+ * <li>And on leap years, twenty-nine.</li>
+ * <li>A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.</li>
+ * </ul>
+ *
+ * How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+ */
+class P19Base extends Problem[Long] {
+  // Add in the extra 0 at the beginning so I can reference months as 1-12 instead of 0-11
+  val daysByMonth = Array[Int](0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+  def days(month: Int, year: Int): Int = month match {
+    case 2 if (year % 4 == 0 && !(year % 100 == 0 && year % 400 != 0)) => 29
+    case x => daysByMonth(x)
+  }
+
+  @tailrec
+  private def rainyDaysAndSundays(acc: Int, curr: Int, month: Int, year: Int): Int = year match {
+    case 2001 => acc
+    case _ =>
+      rainyDaysAndSundays(if (curr == 0) acc + 1 else acc,
+        (curr + days(month, year)) % 7,
+        (month % 12) + 1,
+        if (month == 12) year + 1 else year)
+  }
+
+  def run = rainyDaysAndSundays(0, 0, 1, 1901)
+}
+object P19 extends P19Base with Timing[Long] with Logging[Long]
