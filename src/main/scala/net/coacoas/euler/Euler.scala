@@ -2,19 +2,14 @@ package net.coacoas.euler
 
 import java.util.Calendar
 
-object Support { 
+abstract class GenericProblem[T] extends App {
   def ??? = throw new NotDefinedError("The method has not been defined")
-}
-
-abstract class Problem[T] {
   def run: T
+  def _run = run
+  println(_run)
 }
 
-abstract class ActiveProblem[T] extends Problem[T] { 
-  run
-}
-
-trait Timing[T] extends Problem[T] {
+trait Timing[T] extends GenericProblem[T] {
   def time(f: () => T): T = {
     val start = Calendar.getInstance.getTimeInMillis()
     val s = f()
@@ -23,14 +18,7 @@ trait Timing[T] extends Problem[T] {
     s
   }
 
-  abstract override def run: T = time (super.run _) 
+  abstract override def _run: T = time (super._run _) 
 }
 
-trait Logging[T] extends Problem[T] {
-  abstract override def run: T = {
-    lazy val result = super.run
-    println(result)
-    result
-  }
-}
-
+abstract class Problem extends GenericProblem[Long] with Timing[Long]

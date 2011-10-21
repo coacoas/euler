@@ -1,55 +1,48 @@
 package net.coacoas.euler
 import Streams._
 
-class P1Base extends Problem[String] {
-  override def run() = naturals.take(999).filter(x => (x % 3 == 0) || (x % 5 == 0)).sum.toString
+object P1 extends GenericProblem[Long] with Timing[Long] {
+  override def run = naturals.take(999).filter(x => (x % 3 == 0) || (x % 5 == 0)).sum
 }
-object P1 extends P1Base with Logging[String] with Timing[String]
 
-class P2Base extends Problem[String] {
-  override def run = fibs.takeWhile(_ < 4000000).filter(_ % 2 == 0).sum.toString
+object P2 extends Problem with Timing[Long] {
+  override def run = fibs.takeWhile(_ < 4000000).filter(_ % 2 == 0).sum
 }
-object P2 extends P2Base with Timing[String] with Logging[String]
 
-class P3Base extends Problem[String] {
+object P3 extends Problem with Timing[Long] {
   override def run = {
     var theNum = 600851475143L
-    naturals.drop(1).dropWhile(n => { while (theNum % n == 0) { theNum /= n }; theNum > 1 }).head.toString
+    naturals.drop(1).dropWhile(n => { while (theNum % n == 0) { theNum /= n }; theNum > 1 }).head
   }
 }
-object P3 extends P3Base with Timing[String] with Logging[String]
 
-class P4Base extends Problem[String] {
+object P4 extends Problem with Timing[Long] {
   override def run = {
     for {
       i <- 100 to 999
       j <- 100 to 999
       if ((i * j).toString.reverse == (i * j).toString)
     } yield (i * j)
-  }.max.toString
+  }.max
 }
-object P4 extends P4Base with Timing[String] with Logging[String]
 
-class P5Base extends Problem[String] {
+object P5 extends Problem with Timing[Long] {
   val all = naturals.take(20).toSeq
-  override def run = Iterator.from(1).find(i => all.forall(d => i % d == 0)).toString()
-} 
-object P5 extends P5Base with Timing[String] with Logging[String]
+  override def run = Iterator.from(1).find(i => all.forall(d => i % d == 0)).get
+}
 
-class P6Base extends Problem[String] {
+object P6 extends Problem with Timing[Long] {
   def sumOfSquares(longs: Seq[Int]) = longs.foldLeft(0)((acc, l) => acc + (l * l))
-  def squareOfSums(longs: Seq[Int]) = { val sums = longs.sum; sums * sums } 
+  def squareOfSums(longs: Seq[Int]) = { val sums = longs.sum; sums * sums }
 
-  override def run = (squareOfSums((1 to 100).toSeq) - sumOfSquares((1 to 100).toSeq)).toString
+  override def run = (squareOfSums((1 to 100).toSeq) - sumOfSquares((1 to 100).toSeq))
 }
-object P6 extends P6Base with Timing[String] with Logging[String]
 
-class P7Base extends Problem[String] { 
-  override def run = primes.drop(10000).head.toString
+object P7 extends Problem with Timing[Long] {
+  override def run = primes.drop(10000).head
 }
-object P7 extends P7Base with Timing[String] with Logging[String]
 
-class P8Base extends Problem[String] {
+object P8 extends Problem with Timing[Long] {
   override def run = {
     """73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
@@ -71,17 +64,14 @@ class P8Base extends Problem[String] {
 84580156166097919133875499200524063689912560717606
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450
-""".replaceAll("""\n""", "").map(_ - '0').sliding(5).map(x => x.foldLeft(1)(_ * _)).max.toString
+""".replaceAll("""\n""", "").map(_ - '0').sliding(5).map(x => x.foldLeft(1)(_ * _)).max
   }
 }
-object P8 extends P8Base with Timing[String] with Logging[String]
 
-class P9Base extends Problem[String] {
-  override def run = "Test"
+object P9 extends Problem with Timing[Long] {
+  override def run = ???
 }
-object P9 extends P9Base with Timing[String] with Logging[String]
 
-class P10Base extends Problem[String] {
-  override def run = primes.takeWhile(_ < 2000000).sum.toString
+object P10 extends Problem with Timing[Long] {
+  override def run = primes.takeWhile(_ < 2000000).sum
 }
-object P10 extends P10Base with Timing[String] with Logging[String]
