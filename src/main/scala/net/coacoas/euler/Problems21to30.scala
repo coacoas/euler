@@ -17,7 +17,12 @@ import scala.io.Source
  * Evaluate the sum of all the amicable numbers under 10000.
  */
 object P21 extends Problem {
-  override def run = ???
+  def divisors(n: Int): Seq[Int] = (1 to n/2).filter(x => n % x == 0)
+  def d(n: Int) = divisors(n).sum
+  override def run = (1 to 10000).filter(x => { 
+	  val d1 = d(x)
+	  d1 != x && x == d(d1)
+  }).sum
 }
 
 /**
