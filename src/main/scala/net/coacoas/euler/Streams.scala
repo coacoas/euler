@@ -20,5 +20,4 @@ object Streams {
   val primes: Stream[Long] = 2L #:: primes.map(i =>
     from(i + 1).find(j =>
       primes.takeWhile(k => k * k <= j).forall(j % _ > 0)).get)
-
 }

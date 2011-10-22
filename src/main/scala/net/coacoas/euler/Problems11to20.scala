@@ -137,7 +137,7 @@ object P17 extends Problem {
 }
 
 object P18 extends Problem {
-  override def run = 0
+  override def run = ???
 }
 
 /**
@@ -177,6 +177,14 @@ object P19 extends Problem {
   override def run = rainyDaysAndSundays(0, 0, 1, 1901)
 }
 
+/** 
+ * n! means n  (n  1)  ...  3  2  1
+ * 
+ * For example, 10! = 10  9  ...  3  2  1 = 3628800 and the sum of the digits 
+ * in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+ * 
+ * Find the sum of the digits in the number 100!
+ */
 object P20 extends Problem {
   def fac(n: Int) = { 
     @tailrec
@@ -189,11 +197,4 @@ object P20 extends Problem {
   override def run = { 
 	  fac(100).toString.toList.foldLeft(0)((acc, i) => (acc + (i - '0')))
   }
-}
-
-object All extends App {
-  List(P11, P12, P13, P14, P15, P16, P17, P18, P19, P20).foreach(x => { 
-    println(x.getClass.getCanonicalName)
-    println(x._run)
-  })
 }

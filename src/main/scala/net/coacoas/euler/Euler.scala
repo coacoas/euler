@@ -3,7 +3,8 @@ package net.coacoas.euler
 import java.util.Calendar
 
 abstract class GenericProblem[T] extends App {
-  def ??? = throw new NotDefinedError("The method has not been defined")
+  def ??? = sys.error("The method has not been defined")
+  
   def run: T
   def _run = run
   println(_run)

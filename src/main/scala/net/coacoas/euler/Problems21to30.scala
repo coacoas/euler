@@ -16,7 +16,9 @@ import scala.io.Source
  *
  * Evaluate the sum of all the amicable numbers under 10000.
  */
-object P21
+object P21 extends Problem {
+  override def run = ???
+}
 
 /**
  * Using names.txt (Saved as a resource), a 46K text file containing over
