@@ -8,4 +8,6 @@
 /bin
 /project
 /target
+/build
+.Apple*
 **~
