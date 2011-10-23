@@ -5,18 +5,18 @@ object P1 extends GenericProblem[Long] with Timing[Long] {
   override def run = naturals.take(999).filter(x => (x % 3 == 0) || (x % 5 == 0)).sum
 }
 
-object P2 extends Problem with Timing[Long] {
+object P2 extends GenericProblem[BigInt] with Timing[BigInt] {
   override def run = fibs.takeWhile(_ < 4000000).filter(_ % 2 == 0).sum
 }
 
-object P3 extends Problem with Timing[Long] {
+object P3 extends Problem {
   override def run = {
     var theNum = 600851475143L
     naturals.drop(1).dropWhile(n => { while (theNum % n == 0) { theNum /= n }; theNum > 1 }).head
   }
 }
 
-object P4 extends Problem with Timing[Long] {
+object P4 extends Problem {
   override def run = {
     for {
       i <- 100 to 999
@@ -26,23 +26,23 @@ object P4 extends Problem with Timing[Long] {
   }.max
 }
 
-object P5 extends Problem with Timing[Long] {
+object P5 extends Problem {
   val all = naturals.take(20).toSeq
   override def run = Iterator.from(1).find(i => all.forall(d => i % d == 0)).get
 }
 
-object P6 extends Problem with Timing[Long] {
+object P6 extends Problem {
   def sumOfSquares(longs: Seq[Int]) = longs.foldLeft(0)((acc, l) => acc + (l * l))
   def squareOfSums(longs: Seq[Int]) = { val sums = longs.sum; sums * sums }
 
   override def run = (squareOfSums((1 to 100).toSeq) - sumOfSquares((1 to 100).toSeq))
 }
 
-object P7 extends Problem with Timing[Long] {
+object P7 extends Problem {
   override def run = primes.drop(10000).head
 }
 
-object P8 extends Problem with Timing[Long] {
+object P8 extends Problem {
   override def run = {
     """73167176531330624919225119674426574742355349194934
 96983520312774506326239578318016984801869478851843
@@ -68,10 +68,10 @@ object P8 extends Problem with Timing[Long] {
   }
 }
 
-object P9 extends Problem with Timing[Long] {
+object P9 extends Problem {
   override def run = ???
 }
 
-object P10 extends Problem with Timing[Long] {
+object P10 extends Problem {
   override def run = primes.takeWhile(_ < 2000000).sum
 }

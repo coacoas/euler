@@ -10,7 +10,7 @@ object Streams {
 
   lazy val naturals = from(1)
   
-  lazy val fibs: Stream[Long] =  1 #:: 1 #:: (fibs zip fibs.tail).map{ case (a,b) => a+b }
+  lazy val fibs: Stream[BigInt] =  1 #:: 1 #:: (fibs zip fibs.tail).map{ case (a,b) => a+b }
 
   lazy val triangleNumbers: Stream[Long] = {
     def loop(n: Long, last: Long): Stream[Long] = (n + last) #:: loop(n + 1, n + last)
