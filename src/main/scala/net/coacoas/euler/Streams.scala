@@ -17,6 +17,12 @@ object Streams {
     loop(1, 0)
   }
 
+  def divisors(n: Int): Seq[Int] = (1 to n/2).filter(x => n % x == 0)
+  def isAbundant(n: Int) = divisors(n).sum > n
+  def isPerfect(n: Int) = divisors(n).sum == n
+  val abundantNums: Stream[Int] = Stream.from(1).filter(isAbundant)
+
+
   val primes: Stream[Long] = 2L #:: primes.map(i =>
     from(i + 1).find(j =>
       primes.takeWhile(k => k * k <= j).forall(j % _ > 0)).get)
