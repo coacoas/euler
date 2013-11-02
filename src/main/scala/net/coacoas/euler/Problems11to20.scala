@@ -147,7 +147,7 @@ class p18(filename: String) extends Problem {
     val tri = readFile(classOf[Problem].getClassLoader().getResourceAsStream(filename))
     val reversed = tri.reverse
     
-    reversed.foldLeft(Vector.fill(reversed.size + 1)(0L)) { (totals, row) => 
+    reversed.reduce { (totals, row) => 
       row.zipWithIndex.map { case (value, idx) => 
         val maxChild = if (totals(idx) > totals(idx + 1)) totals(idx) else totals(idx + 1)
         value + maxChild
