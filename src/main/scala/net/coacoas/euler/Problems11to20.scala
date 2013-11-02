@@ -146,10 +146,11 @@ class p18(filename: String) extends Problem {
   def run = {
     val tri = readFile(classOf[Problem].getClassLoader().getResourceAsStream(filename))
     val reversed = tri.reverse
+    def max(a: Int, b: Int) = if (a > b) a else b
     
     reversed.reduce { (totals, row) => 
       row.zipWithIndex.map { case (value, idx) => 
-        val maxChild = if (totals(idx) > totals(idx + 1)) totals(idx) else totals(idx + 1)
+        val maxChild = max(totals(idx), totals(idx + 1))
         value + maxChild
       }
     }.max
