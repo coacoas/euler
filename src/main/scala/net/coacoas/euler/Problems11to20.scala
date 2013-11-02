@@ -1,8 +1,9 @@
 package net.coacoas.euler
 import scala.annotation.tailrec
 import scala.io.Source
-
 import Streams._
+import java.io.File
+import java.io.InputStream
 
 object P11 extends Problem {
   def max(i: Int, j: Int, values: Array[Array[Int]]): Int = {
@@ -136,9 +137,27 @@ object P17 extends Problem {
   override def run = (1 to 1000).map(asString(_).length).sum
 }
 
-object P18 extends Problem {
-  override def run = ???
+class p18(filename: String) extends Problem {
+  type Triangle = Vector[Vector[Int]]
+  case class Position(val row: Int, val column: Int)
+  
+  def readFile(f: InputStream): Triangle = io.Source.fromInputStream(f).getLines.toVector.map(_.split(" ").map(_.toInt).toVector)
+
+  def run = {
+    val tri = readFile(classOf[Problem].getClassLoader().getResourceAsStream(filename))
+    val reversed = tri.reverse
+    
+    reversed.foldLeft(Vector.fill(reversed.size + 1)(0L)) { (totals, row) => 
+      row.zipWithIndex.map { case (value, idx) => 
+        val maxChild = if (totals(idx) > totals(idx + 1)) totals(idx) else totals(idx + 1)
+        value + maxChild
+      }
+    }.max
+  }
 }
+
+object P18 extends p18("triangle-18.txt")
+object P67 extends p18("triangle-67.txt")
 
 /**
  * You are given the following information, but you may prefer to do some research for yourself.

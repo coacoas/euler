@@ -5,17 +5,16 @@ group = "net.coacoas"
 version = "1.0"
 
 repositories {
-	mavenRepo urls: "${mvn_repository}"
+  mavenCentral() 
 }
 
-scalaVersion = '2.9.1'
+ext.scalaVersion = '2.10.3'
 
 dependencies {
-	// Libraries needed to run the scala tools
-	scalaTools "org.scala-lang:scala-compiler:${scalaVersion}",
-	           "org.scala-lang:scala-library:${scalaVersion}"
-
-	// Libraries needed for scala api
-	compile "org.scala-lang:scala-library:${scalaVersion}"
+    compile "org.scala-lang:scala-library:${scalaVersion}"
+    
+    testCompile "org.scalatest:scalatest_2.10:2.+"
+    testCompile "org.scalacheck:scalacheck_2.10:1.+"
+    testCompile "junit:junit:4.11"	
 }
 

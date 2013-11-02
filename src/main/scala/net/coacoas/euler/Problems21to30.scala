@@ -75,7 +75,7 @@ A permutation is an ordered arrangement of objects. For example, 3124 is one pos
 What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
 */
 object P24 extends Problem {
-  override def run = ???
+  override def run = (0 to 9).toVector.permutations.take(1000000).map(_.mkString).toVector.sortWith(_ > _).head.toLong
 }
 
 /**
