@@ -43,3 +43,9 @@ object P35 extends Problem {
   
   override def run = primes.map(P35.circulars).filter(_.tail.forall(primes)).size
 }
+
+object P36 extends Problem { 
+  def isPalindrome(s: String) = s == s.reverse
+  
+  override def run = (0L until 1000000L).filter(x => isPalindrome(x.toString)).filter(y => isPalindrome(y.toBinaryString)).sum
+}
