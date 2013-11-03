@@ -150,8 +150,7 @@ class p18(filename: String) extends Problem {
     
     reversed.reduce { (totals, row) => 
       row.zipWithIndex.map { case (value, idx) => 
-        val maxChild = max(totals(idx), totals(idx + 1))
-        value + maxChild
+        value + max(totals(idx), totals(idx + 1))
       }
     }.max
   }
